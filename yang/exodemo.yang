@@ -1,0 +1,218 @@
+module demo {
+
+    namespace "http://feuerlabs.com/demo";
+    prefix demo;
+
+    import exosense {
+        prefix exo;
+    }
+
+    description "Spec for demo system";
+
+    typedef id-string {
+      description "Common type for string identifiers in exodm";
+      type string {
+	length "1..64";
+      }
+    }
+
+    //
+    // update-config-entry
+    //
+    rpc update-config-entry-request {
+        description
+        "Update the configuration of a given device." +
+            "This request updates the config of a device directly " +
+            "without using configuration sets. " +
+            "The provided list of configuration entries are immediately " +
+            "queued for deployment on the device without having to send " +
+            "a specific deployment request.";
+
+        input {
+            description
+            "Input consists of standard request elements " +
+                "and a list of configuration entries.";
+
+            uses exo:std-request;
+
+	    list config-entries {
+                description
+                "A list of configuration entries to update on device.";
+                key "name";
+                uses exo:configuration-entry;
+            }
+
+        }
+
+        // Output only contains status.
+        output {
+            description
+            "Output sent in response to a update-config-entry-request";
+            uses exo:std-callback;
+        }
+    }
+
+
+    notification update-config-entry-callback {
+        description
+        "Notification(s) sent in response to a update-config-request";
+        uses exo:std-callback;
+    }
+
+
+    //
+    // Callout for processing waypoints.
+    // Used both by device->exosense Exoport and exosense->webserver
+    //
+    rpc process-waypoints {
+        description
+        "Process a batch of waypointes.";
+
+        input {
+            uses exo:std-request;
+
+	    leaf device-id {
+		description "Account-wide unique device-id";
+		type id-string;
+		mandatory true;
+	    }
+
+
+	    list waypoints {
+                description  "A list of configuration entries to update on device.";
+                key "ts";
+
+		leaf ts {
+		    description "UTC Time Stamp";
+		    type uint32;
+		}
+
+		leaf lat {
+		    description "Latitude of device location";
+		    type decimal64 {
+			fraction-digits 6;
+			range "-90..90";
+		    }
+		}
+
+		leaf lon {
+		    description "Longitude of device location";
+		    type decimal64 {
+			fraction-digits 6;
+			range "-180..180";
+		    }
+		}
+            }
+        }
+
+        // Output only contains status.
+        output {
+            description
+            "Output sent in response to a process-waypoints";
+            leaf result {
+		type exo:status-code;
+	    }
+        }
+    }
+
+
+    //
+    // Callout for processing logdata
+    // Used both by device->exosense Exoport and exosense->webserver
+    //
+    rpc process-logdata {
+        description
+        "Process a batch of logdata.";
+
+        input {
+            uses exo:std-request;
+
+	    leaf device-id {
+		description "Account-wide unique device-id";
+		type id-string;
+		mandatory true;
+	    }
+
+	    list logdata {
+                description  "A list of can frames logged by the device.";
+                key "ts";
+
+		leaf ts {
+		    description "UTC Time Stamp with 3 decimals for millisec";
+		    type decimal64;
+		    fraction-digits 3;
+		}
+
+		leaf can-frame-id {
+		    description "CAN frame logged";
+		    type uint32;
+		}
+
+		leaf can-value {
+		    description "CAN value logged";
+		    type uint32;
+		}
+            }
+        }
+
+        // Output only contains status.
+        output {
+            description
+            "Output sent in response to a process-logdata";
+            leaf result {
+		type exo:status-code;
+	    }
+        }
+    }
+
+    //
+    // Callout for processing alarms
+    // Used both by device->exosense Exoport and exosense->webserver
+    //
+    rpc process-alarms {
+        description
+        "Process a batch of alarms.";
+
+        input {
+            uses exo:std-request;
+
+	    leaf device-id {
+		description "Account-wide unique device-id";
+		type id-string;
+		mandatory true;
+	    }
+
+	    list alarms {
+                description  "A list of alarms triggered in the device.";
+                key "ts";
+
+		leaf ts {
+		    description "UTC Time Stamp with 3 decimals for millisec";
+		    type decimal64;
+		    fraction-digits 3;
+		}
+
+		leaf can-frame-id {
+		    description "CAN frame logged";
+		    type uint32;
+		}
+
+		leaf can-value {
+		    description "CAN value logged";
+		    type uint32;
+		}
+            }
+        }
+
+        // Output only contains status.
+        output {
+            description
+            "Output sent in response to a process-alarms";
+            leaf result {
+		type exo:status-code;
+	    }
+        }
+    }
+}
+
+
