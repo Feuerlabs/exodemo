@@ -15,5 +15,3 @@
      [{'transaction-id', 1},
       {'status-code', 1},
       {'final', true}]}.
-
-
