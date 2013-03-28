@@ -25,9 +25,7 @@ start_link() ->
 
 init([]) ->
     {ok, { {one_for_one, 5, 10},
-	   [?CHILD(exodemo_alarms, worker),
-	    ?CHILD(exodemo_log, worker),
-	    ?CHILD(exodemo_can, worker),
+	   [?CHILD(exodemo_can, worker),
 	    ?CHILD(exodemo_waypoints, worker)
 	    %% ?CHILD(exodemo_gps, worker),
 	    %% ?CHILD(exodmo_config, worker)

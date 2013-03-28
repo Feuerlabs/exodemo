@@ -14,20 +14,12 @@
 start(_StartType, _StartArgs) ->
     exodemo_sup:start_link().
 
-start_phase(alarms, _, _) ->
-    exodemo_alarms:read_config(),
-    ok;
-start_phase(logging, _, _) ->
-    exodemo_log:read_config(),
-    ok;
 start_phase(ping, _, _) ->
     exoport:ping(),
     ok;
-start_phase(can, _, _) ->
-    exodemo_can:start_can(),
-    ok;
-start_phase(waypoints, _, _) ->
-    exodemo_waypoints:start_waypoints("/dev/ttySAC1"),
+
+start_phase(hello, _, _) ->
+    exodemo_hello:start_hello(),
     ok.
 
 stop(_State) ->
