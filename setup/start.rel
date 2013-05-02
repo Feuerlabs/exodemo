@@ -12,7 +12,8 @@
           {exo,"0.6.5"},
           {bert,"0.8"},
           {gproc,"0.2.13.2"},
+          {yang,"0.9-4-g1c9c9bc",load},
           {sext,"0.5.1"},
           {kvdb,"0.8.2"},
-          {exoport,"0.2"},
+          {exoport,"0.3"},
           {exodemo,"1"}]}.

@@ -1,5 +1,5 @@
 %% -*- erlang-indent-level: 4;indent-tabs-mode: nil -*-
--module(exodemo_beep).
+-module(exodemo_rpc).
 
 -export(['beep'/1]).
 
