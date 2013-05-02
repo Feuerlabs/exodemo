@@ -1,5 +1,25 @@
 # Exosense Device Template Application Build
-**(C) 2013 Feuerlabs, Inc - Magnus Feuer**
+**(C) 2013 Feuerlabs, Inc - All Rights Reserved**
+
+# Documentaion Locations
+
+1. **Building flashable Exosense Device Demo application image**<br>
+Please see the README.md file at
+ `https://github.com/Feuerlabs/exosense_specs` .<br> This repo contains
+the exosense_demo_tutorial.pdf file with complete instructions on setting up
+a build system, creating an Exosense Device image, deploying and testing it
+on target hardware.
+
+2. **Building Exosense Device Demo application for desktop use**<br>
+This document.
+
+3. **Exosense Server Usage**<br>
+Please see the README.md file at
+ `https://github.com/Feuerlabs/exosense_specs` .<br> This repo contains
+an Exosnese Server User Manual, a JSON-RPC Reference Manual, and
+sample shell scripts using curl(1) to interface the server.
+
+# Introduction
 
 This repository contains the Yocto recipes to build the demo
 application running on top of the Exosense Device software stack.
@@ -20,7 +40,7 @@ and its `doc/exosense_demo_tutorial.pdf` file for detailed
 instructions on how to build and flash an image with the demo
 application on target hardware.
 
-# Building locally
+# Building demo application on a local machine
 
 Install Erlang R15B1 or on the machine that is to run the demo. If
 precompiled packages are not available for the target environment, the
@@ -30,7 +50,7 @@ Install rebar from `https://github.com/basho/rebar`. Once built, copy
 the target `rebar` binary to `/usr/local/bin` or another directory in
 the search path of the shell.
 
-## Compiling exodemo.
+## Compiling the code
 
 The demo application can be built with a simple make command:
 
