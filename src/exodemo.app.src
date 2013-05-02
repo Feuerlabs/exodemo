@@ -10,10 +10,7 @@
 		  exoport
                  ]},
   {mod, { exodemo_app, []}},
-  {start_phases, [{can, []},
-		  {waypoints, []},
-		  {ping, []},
-		  {logging, []},
-		  {alarms, []}]},
+  {start_phases, [{ping, []},
+		  {hello, []}]},
   {env, []}
  ]}.

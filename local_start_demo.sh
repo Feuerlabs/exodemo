@@ -15,10 +15,12 @@
 ##
 export KVDB_BACKENDS=ets
 
-erl -boot $PWD/setup/start -config $PWD/setup/sys
+# Make sure that these values match the device id and keys setup
+# in the exosense server.
+export exo_host=vps.ulf.wiger.net
+export exo_device_id="demo-1"
+export exo_account=getaround
+export exo_server_key=1
+export exo_device_key=2
 
-# This needs to be setup correctl
-# {exodm_host, "vps.ulf.wiger.net"}.
-# {'device-id', "*account*2"}.
-# {'ckey', 4}.
-# {'skey', 3}.
+erl -boot $PWD/setup/start -config $PWD/setup/sys

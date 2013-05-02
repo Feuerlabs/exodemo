@@ -15,11 +15,11 @@ recomp:
 	rebar compile skip_deps=true
 
 setup:
-	ERL_LIBS+=":`pwd`/deps" \
+	ERL_LIBS="$ERL_LIBS:`pwd`/deps" \
 	deps/setup/setup_gen $(NAME) priv/setup.config setup -pz `pwd`/ebin
 
 target:
-	ERL_LIBS+=":`pwd`/deps" \
+	ERL_LIBS="$ERL_LIBS:`pwd`/deps" \
 	deps/setup/setup_gen $(NAME) priv/setup.config setup -pz `pwd`/ebin \
 	-target rel -vsn 0.1
 

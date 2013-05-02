@@ -33,8 +33,9 @@ handle_cast(_, S) ->
 
 
 handle_call({start_hello}, _From, _St) ->
-    io:format("exodemo_hello:handle_call(start_hello)~n", []),
-    erlang:start_timer(get_configured_interval(), self(), {send_hello}),
+    Intv = get_configured_interval(),
+    io:format("exodemo_hello:handle_call(start_hello, ~p)~n", [Intv]),
+    erlang:send_after(Intv, self(), { send_hello, Intv}),
     {reply, ok, #st { }};
 
 handle_call(Msg, From, S) ->
@@ -42,14 +43,16 @@ handle_call(Msg, From, S) ->
     {reply, error, S}.
 
 
-handle_info({send_hello}, St) ->
+handle_info({send_hello, Intv}, St) ->
+    io:format("exodemo_hello:handle_info({send_hello, ~p}, ~p)~n",
+	      [Intv, St]),
     exoport:rpc(exodm_rpc, rpc, [<<"exodemo">>, <<"hello">>,
-				 [{'arg1', {"world"}}]]),
+				 [{'arg1', "world"}]]),
 
-    erlang:start_timer(get_configured_interval(), self(), {send_hello}),
+    erlang:send_after(Intv, self(), { send_hello, Intv}),
     { noreply, St };
 
-handle_info(Msg,  S) ->
+handle_info(Msg, S) ->
     io:format("exodemo_hello:handle_info(?? ~p, ~p)~n", [Msg, S]),
     {noreply, S}.
 
@@ -61,8 +64,8 @@ code_change(_FromVsn, S, _Extra) ->
     {ok, S}.
 
 get_configured_interval() ->
-    Res = case kvdb_conf:read(?CFG_INTERVAL) of
-	      { ok, { _, _, I }} -> I;
-	      { error, not_found } -> 10
-	  end,
-    Res * 10.
+    case kvdb_conf:read(?CFG_INTERVAL) of
+	{ ok, { _, _, I }} -> I;
+	{ error, not_found } -> 10000
+    end.
+
