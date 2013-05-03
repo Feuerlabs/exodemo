@@ -34,7 +34,7 @@ by the recipe found under `recpies-exodemo/exodemo/erlang-exodemo_git.bb`
 
 Please see:
 
-    git://github.com/Feuerlabs/exosense_specs.git
+    https://github.com/Feuerlabs/exosense_specs.git
 
 and its `doc/exosense_demo_tutorial.pdf` file for detailed
 instructions on how to build and flash an image with the demo
