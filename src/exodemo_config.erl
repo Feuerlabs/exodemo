@@ -3,8 +3,6 @@
 
 -export(['set-hello-interval'/1]).
 
--include_lib("lager/include/log.hrl").
-
 -define(CFG_INTERVAL, <<"config*interval">>).
 
 
